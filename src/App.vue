@@ -1,6 +1,7 @@
 <template>
   <nav>
-    <router-link to="/">Inicio</router-link>
+    <router-link to="/">Inicio</router-link> |
+    <router-link to="/CompraVenta">Compra y Venta</router-link>
   </nav>
   <router-view />
 </template>
