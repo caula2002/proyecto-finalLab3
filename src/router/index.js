@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import InicioView from "@/views/InicioView.vue";
 import CompraVentaView from "@/views/CompraVentaView.vue";
+import HistorialMovimientoView from "@/views/HistorialMovimientoView.vue";
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: "/CompraVenta",
     name: "CompraVenta",
     component: CompraVentaView,
+  },
+  {
+    path: "/HistorialMovimiento",
+    name: "HistorialMovimiento",
+    component: HistorialMovimientoView,
   },
 ];
 

@@ -1,7 +1,10 @@
 <template>
   <nav>
     <router-link to="/">Inicio</router-link> |
-    <router-link to="/CompraVenta">Compra y Venta</router-link>
+    <router-link to="/CompraVenta">Compra y Venta</router-link> |
+    <router-link to="/HistorialMovimiento"
+      >Historial de Movimientos</router-link
+    >
   </nav>
   <router-view />
 </template>
