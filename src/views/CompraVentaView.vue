@@ -125,7 +125,7 @@ export default {
         action: this.seleccionOperacion,
         crypto_code: this.tipoMoneda,
         crypto_amount: this.cantidadCripto,
-        money: this.valorCripto,
+        money: this.cantidadCripto * this.valorCripto,
         datetime: new Date().toISOString(),
       };
       axios
