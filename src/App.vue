@@ -5,6 +5,8 @@
     <router-link to="/HistorialMovimiento"
       >Historial de Movimientos</router-link
     >
+    |
+    <router-link to="/Analisis">Analisis</router-link>
   </nav>
   <router-view />
 </template>

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import InicioView from "@/views/InicioView.vue";
 import CompraVentaView from "@/views/CompraVentaView.vue";
 import HistorialMovimientoView from "@/views/HistorialMovimientoView.vue";
+import AnalisisView from "@/views/AnalisisView.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/HistorialMovimiento",
     name: "HistorialMovimiento",
     component: HistorialMovimientoView,
+  },
+  {
+    path: "/Analisis",
+    name: "Analisis",
+    component: AnalisisView,
   },
 ];
 

@@ -1,18 +1,19 @@
 <template>
   <div id="historial-movimientos">
-    <h1>Historial de Movimientos</h1>
-    <!-- Sección de búsqueda -->
-    <form @submit.prevent="BuscarUsuario">
-      <div class="id">
-        <input type="text" v-model="Id" placeholder="Ingresar ID" required />
-        <button type="submit" class="btn-registrar">Buscar</button>
-      </div>
-      <p v-if="Nombre && Apellido" class="bienvenido">
-        Bienvenido {{ Nombre }} {{ Apellido }}
-      </p>
-      <p v-else-if="error" class="error">{{ error }}</p>
-    </form>
-
+    <div id="cabezera">
+      <h1>Historial de Movimientos</h1>
+      <!-- Sección de búsqueda -->
+      <form @submit.prevent="BuscarUsuario">
+        <div class="id">
+          <input type="text" v-model="Id" placeholder="Ingresar ID" required />
+          <button type="submit" class="btn-registrar">Buscar</button>
+        </div>
+        <p v-if="Nombre && Apellido" class="bienvenido">
+          Bienvenido {{ Nombre }} {{ Apellido }}
+        </p>
+        <p v-else-if="error" class="error">{{ error }}</p>
+      </form>
+    </div>
     <!-- Tabla de transacciones -->
     <div v-if="transacciones.length > 0" class="table-container">
       <table>
@@ -66,7 +67,7 @@
       <div class="modal-content">
         <h2>Editar Transacción</h2>
         <form @submit.prevent="GuardarEdicion">
-          <label for="crypto_amount">Cantidad:</label>
+          <label>Cantidad:</label>
           <input
             type="number"
             v-model="transaccionEditable.crypto_amount"
@@ -192,6 +193,14 @@ export default {
 };
 </script>
 <style scoped>
+#cabezera {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 h1 {
   color: #2c3e50;
   text-align: center;
