@@ -1,5 +1,20 @@
 <template>
   <div id="inicio">
+    <!-- Inicio de Secion -->
+    <div>
+      <h1>Iniciar Secion</h1>
+      <form @submit.prevent="BuscarUsuario">
+        <div class="id">
+          <input type="text" v-model="Id" placeholder="Ingresar ID" required />
+          <button type="submit" class="btn-registrar">Buscar</button>
+        </div>
+        <p v-if="NombreInicio && ApellidoInicio" class="bienvenido">
+          Bienvenido {{ NombreInicio }} {{ ApellidoInicio }}
+        </p>
+        <p v-else-if="error" class="error">{{ error }}</p>
+      </form>
+    </div>
+    <!-- Registro -->
     <h1>Registro de usuario</h1>
     <div class="ingreso">
       <input
@@ -36,6 +51,9 @@ export default {
   name: "InicioView",
   data() {
     return {
+      Id: "",
+      NombreInicio: "",
+      ApellidoInicio: "",
       Nombre: "",
       Apellido: "",
       error: "",
@@ -44,6 +62,21 @@ export default {
     };
   },
   methods: {
+    BuscarUsuario() {
+      let usuariosGuardados =
+        JSON.parse(localStorage.getItem("usuarios")) || [];
+      let usuario = usuariosGuardados.find((user) => user.id === this.Id);
+      if (usuario) {
+        this.NombreInicio = usuario.nombre;
+        this.ApellidoInicio = usuario.apellido;
+        this.error = "";
+        localStorage.setItem("Id", this.Id);
+      } else {
+        this.NombreInicio = "";
+        this.ApellidoInicio = "";
+        this.error = "Usuario no encontrado";
+      }
+    },
     Validacion() {
       this.error = "";
       this.IdAlf = null;
@@ -103,6 +136,19 @@ export default {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+form input {
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+form input:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
 }
 
 h1 {
@@ -187,6 +233,16 @@ h1 {
 .registro .id {
   margin-top: 0.5rem;
   font-weight: 600;
+}
+.bienvenido {
+  background-color: #e6fffa;
+  color: #2c7a7b;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  border-left: 4px solid #38b2ac;
 }
 
 @media (max-width: 640px) {

@@ -3,14 +3,9 @@
     <h1>Compra y Venta</h1>
     <form @submit.prevent="ConsultaApi">
       <div class="id">
-        <input type="text" v-model="Id" placeholder="Ingresar ID" required />
-        <button type="button" class="btn-registrar" @click="BuscarUsuario">
-          Buscar
-        </button>
         <p v-if="Nombre && Apellido" class="bienvenido">
           Bienvenido {{ Nombre }} {{ Apellido }}
         </p>
-        <p v-else-if="error">{{ error }}</p>
       </div>
       <div>
         <label for="seleccionOperacion">Operacion</label>
@@ -40,6 +35,7 @@
           type="number"
           v-model="cantidadCripto"
           @input="validacion"
+          step="0.01"
           required
         />
       </div>
@@ -82,21 +78,18 @@ export default {
       detalles: {},
     };
   },
+  mounted() {
+    this.Id = localStorage.getItem("Id");
+    console.log(this.Id);
+    let usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
+    let usuario = usuariosGuardados.find((user) => user.id === this.Id);
+    if (usuario) {
+      this.Nombre = usuario.nombre;
+      this.Apellido = usuario.apellido;
+      this.error = "";
+    }
+  },
   methods: {
-    BuscarUsuario() {
-      let usuariosGuardados =
-        JSON.parse(localStorage.getItem("usuarios")) || [];
-      let usuario = usuariosGuardados.find((user) => user.id === this.Id);
-      if (usuario) {
-        this.Nombre = usuario.nombre;
-        this.Apellido = usuario.apellido;
-        this.error = "";
-      } else {
-        this.Nombre = "";
-        this.Apellido = "";
-        this.error = "Usuario no encontrado";
-      }
-    },
     async BuscarValorCripto() {
       const cripto = this.tipoMoneda;
       const api = `https://criptoya.com/api/argenbtc/${cripto}/ars`;

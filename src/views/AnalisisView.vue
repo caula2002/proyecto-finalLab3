@@ -2,16 +2,11 @@
   <div id="analisis-estado">
     <div id="cabezera">
       <h1>Análisis de Estado Actual</h1>
-      <!-- Sección de búsqueda -->
+      <!-- Usuario -->
       <form @submit.prevent="BuscarUsuario">
-        <div class="id">
-          <input type="text" v-model="Id" placeholder="Ingresar ID" required />
-          <button type="submit" class="btn-registrar">Buscar</button>
-        </div>
         <p v-if="Nombre && Apellido" class="bienvenido">
           Bienvenido {{ Nombre }} {{ Apellido }}
         </p>
-        <p v-else-if="error" class="error">{{ error }}</p>
       </form>
     </div>
 
@@ -77,22 +72,18 @@ export default {
       valorUsdt: null,
     };
   },
+  mounted() {
+    this.Id = localStorage.getItem("Id");
+    let usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
+    let usuario = usuariosGuardados.find((user) => user.id === this.Id);
+    if (usuario) {
+      this.Nombre = usuario.nombre;
+      this.Apellido = usuario.apellido;
+      this.error = "";
+      this.BuscarMovimientos();
+    }
+  },
   methods: {
-    BuscarUsuario() {
-      let usuariosGuardados =
-        JSON.parse(localStorage.getItem("usuarios")) || [];
-      let usuario = usuariosGuardados.find((user) => user.id === this.Id);
-      if (usuario) {
-        this.Nombre = usuario.nombre;
-        this.Apellido = usuario.apellido;
-        this.error = "";
-        this.BuscarMovimientos();
-      } else {
-        this.Nombre = "";
-        this.Apellido = "";
-        this.error = "Usuario no encontrado";
-      }
-    },
     BuscarMovimientos() {
       axios
         .get(
@@ -252,5 +243,15 @@ table tr:nth-child(even) {
 
 table tr:hover {
   background-color: #f1f1f1;
+}
+.bienvenido {
+  background-color: #e6fffa;
+  color: #2c7a7b;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  border-left: 4px solid #38b2ac;
 }
 </style>

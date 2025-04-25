@@ -2,17 +2,10 @@
   <div id="historial-movimientos">
     <div id="cabezera">
       <h1>Historial de Movimientos</h1>
-      <!-- Sección de búsqueda -->
-      <form @submit.prevent="BuscarUsuario">
-        <div class="id">
-          <input type="text" v-model="Id" placeholder="Ingresar ID" required />
-          <button type="submit" class="btn-registrar">Buscar</button>
-        </div>
-        <p v-if="Nombre && Apellido" class="bienvenido">
-          Bienvenido {{ Nombre }} {{ Apellido }}
-        </p>
-        <p v-else-if="error" class="error">{{ error }}</p>
-      </form>
+      <!-- Ususario -->
+      <p v-if="Nombre && Apellido" class="bienvenido">
+        Bienvenido {{ Nombre }} {{ Apellido }}
+      </p>
     </div>
     <!-- Tabla de transacciones -->
     <div v-if="transacciones.length > 0" class="table-container">
@@ -72,6 +65,7 @@
             type="number"
             v-model="transaccionEditable.crypto_amount"
             id="crypto_amount"
+            step="0.01"
             required
           />
           <button type="submit" class="btn-registrar">Guardar</button>
@@ -117,22 +111,19 @@ export default {
       error: "",
     };
   },
+  mounted() {
+    this.Id = localStorage.getItem("Id");
+    console.log(this.Id);
+    let usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
+    let usuario = usuariosGuardados.find((user) => user.id === this.Id);
+    if (usuario) {
+      this.Nombre = usuario.nombre;
+      this.Apellido = usuario.apellido;
+      this.error = "";
+      this.BuscarMovimientos();
+    }
+  },
   methods: {
-    BuscarUsuario() {
-      let usuariosGuardados =
-        JSON.parse(localStorage.getItem("usuarios")) || [];
-      let usuario = usuariosGuardados.find((user) => user.id === this.Id);
-      if (usuario) {
-        this.Nombre = usuario.nombre;
-        this.Apellido = usuario.apellido;
-        this.error = "";
-        this.BuscarMovimientos();
-      } else {
-        this.Nombre = "";
-        this.Apellido = "";
-        this.error = "Usuario no encontrado";
-      }
-    },
     BuscarMovimientos() {
       axios
         .get(
@@ -413,5 +404,15 @@ modal-content h2 {
 
 .modal-content.lectura .btn-cancelar:hover {
   background-color: #c53030;
+}
+.bienvenido {
+  background-color: #e6fffa;
+  color: #2c7a7b;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  border-left: 4px solid #38b2ac;
 }
 </style>
