@@ -113,7 +113,6 @@ export default {
   },
   mounted() {
     this.Id = localStorage.getItem("Id");
-    console.log(this.Id);
     let usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
     let usuario = usuariosGuardados.find((user) => user.id === this.Id);
     if (usuario) {
@@ -163,9 +162,9 @@ export default {
     GuardarEdicion() {
       const Valor =
         this.transaccionOriginal.money / this.transaccionOriginal.crypto_amount;
-      this.transaccionEditable.money =
-        this.transaccionEditable.crypto_amount * Valor;
-      console.log(this.transaccionEditable.money);
+      this.transaccionEditable.money = (
+        this.transaccionEditable.crypto_amount * Valor
+      ).toFixed(2);
       axios
         .patch(
           `https://laboratorio3-f36a.restdb.io/rest/transactions/${this.transaccionEditable._id}`,

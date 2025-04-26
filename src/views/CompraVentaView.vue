@@ -80,7 +80,6 @@ export default {
   },
   mounted() {
     this.Id = localStorage.getItem("Id");
-    console.log(this.Id);
     let usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
     let usuario = usuariosGuardados.find((user) => user.id === this.Id);
     if (usuario) {
@@ -118,7 +117,7 @@ export default {
         action: this.seleccionOperacion,
         crypto_code: this.tipoMoneda,
         crypto_amount: this.cantidadCripto,
-        money: this.cantidadCripto * this.valorCripto,
+        money: (this.cantidadCripto * this.valorCripto).toFixed(2),
         datetime: new Date().toISOString(),
       };
       axios
